@@ -95,6 +95,24 @@ fn main() {
     let second_mut = &mut my_mut_string;
     println!("{second_mut}");
 
+    // reference dangling: Rust always makes sure that a reference is always valid before until the value's scope. We can't have a reference pointing to an empty space in memory.
+
+    // slices: slices are references and work as a part of a bigger set like strings, arrays. let's write a function which return the first work of a sentence:
+
+    fn first_word(target_string: &str) -> &str {
+        let str_bytes = target_string.as_bytes();
+        for (i, &byte_value) in str_bytes.iter().enumerate(){
+            println!("{i} and {byte_value}");
+            if byte_value == b' ' {
+                return &target_string[..i]
+            }
+        }
+        return target_string;
+    }
+
+    let my_string = String::from("Imagination is important.");
+    let word = first_word(&my_string);
+    println!("{word}")
 
 
 }
