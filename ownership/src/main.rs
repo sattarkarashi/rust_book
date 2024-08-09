@@ -112,7 +112,79 @@ fn main() {
 
     let my_string = String::from("Imagination is important.");
     let word = first_word(&my_string);
-    println!("{word}")
+    println!("{word}");
+
+    // Structs: like objects in other programming languages, struct gives us a similar structure to work with
+
+    struct Car {
+        starts:bool,
+        engine:String,
+        steer:String,
+        brake:bool,
+        km_count:u32
+    }
+
+    let car1 = Car {
+        starts: true,
+        engine: String::from("8 silnders"),
+        steer: String::from("Right"),
+        brake: false,
+        km_count: 12000,
+    };
+
+
+    let car1_engine = car1.engine;
+
+    println!("{car1_engine}");
+
+    // let car1_engine = car1.engine;
+    
+    let car1_steer = car1.steer;
+    println!("{car1_steer}");
+    // Remember that you actually moved these values and you no longer can access them inside car1
+
+    // if you want to change a value in struct, you should make the whole struct mutable and it doesn't let make the single values mutable.
+
+    let mut car2 = Car {
+        starts: true,
+        engine: String::from("8 silnders"),
+        steer: String::from("Right"),
+        brake: false,
+        km_count: 12000,
+    };
+
+    car2.engine = String::from("6 silenders");
+
+    // using a struct value inside another
+
+    let car3 = Car {
+        starts:true,
+        ..car2
+    };
+
+    let car3_engine = &car3.engine;
+    println!("car3 engine is {car3_engine}");
+
+    // let car2_engine = &car2.engine;
+    // println!("car2 engine is {car2_engine}");
+    // The above commented code panics, because it has actually moved the engine from car2 to car3 because it is a heap value but you can still access the stack values from car2.
+
+    fn car_builder(starts:bool, engine:String) -> Car {
+        Car {
+            starts,
+            engine,
+            steer: String::from("Right"),
+            brake: false,
+            km_count: 12000,
+        }
+    }
+
+    let car4 = car_builder(true, String::from("12 Silender"));
+    let car4_engine = &car4.engine;
+    println!("car4 engine is {car4_engine}");
+
+    // inside this function we give the same name as struct values and we didn't want to assign it like starts:starts
+
 
 
 }
