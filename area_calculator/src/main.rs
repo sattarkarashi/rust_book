@@ -31,6 +31,20 @@ fn main() {
     let method_area = rectangle.area();
     println!("The area of the rectangle using the struct method is {}  square meters. and the rectangle is {:?}",method_area,rectangle);
 
+    // There is another way to print out the structs using dbg, but dbg takes ownership and you should understand that.
+
+    dbg!(&rectangle);
+
+
+    // Since it takes owner ship, it can be assigned to variables too. Try to use references inside dbg for ownership issues.
+    let rectangle2 = Rectangle{
+        height:dbg!(80),
+        width:180
+    };
+
+    let method2_area = rectangle2.area();
+    dbg!(&method2_area);
+
   
 }
 
