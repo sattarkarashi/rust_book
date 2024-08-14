@@ -45,6 +45,27 @@ fn main() {
     let method2_area = rectangle2.area();
     dbg!(&method2_area);
 
+    // associated functions: Beside  methods we can define associated functions for constructs which don't take self and don't need an instance to initialize
+
+    impl Rectangle {
+        fn get_square(size:u32) -> Self {
+            Self{
+                width:size,
+                height:size
+            }
+        }
+        
+    };
+
+    // we call these function using ::
+
+    let square = Rectangle::get_square(32);
+    dbg!(&square);
+    let square_area = square.area();
+    dbg!(&square_area);
+
+
+
   
 }
 
