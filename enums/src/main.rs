@@ -59,6 +59,70 @@ fn main() {
 
     
     my_home.call();
+
+    // match expressions with enums
+
+    enum Coin{
+        Penny,
+        Nickel,
+        Dime,
+        Quarter
+    }
+
+    fn value_in_cents(coin:Coin) -> u8{
+        match coin {
+            Coin::Penny => 1,
+            Coin::Nickel => 5,
+            Coin::Dime => 10,
+            Coin::Quarter => 25,
+        }
+    }
+
+    #[derive(Debug)]
+    enum UsState {
+        Wisconsin,
+        Dakota,
+        Alabama,
+        Alaska
+    }
+
+    enum Coinn {
+        Penny,
+        Nickel,
+        Dime,
+        Quarter(UsState),
+    }
+
+    fn value_in_cents2(coin:Coinn) -> u8{
+        match coin {
+            Coinn::Penny => 1,
+            Coinn::Nickel => 5,
+            Coinn::Dime => 10,
+            Coinn::Quarter(state) => {
+                println!("State quarter is from {:?}.",state);
+                25
+            }
+        }
+    }
+
+    value_in_cents2(Coinn::Quarter(UsState::Wisconsin));
+
+    // match expressions with options
+
+    fn pluse_one(x: Option <i32>) -> Option <i32> {
+        match x {
+            None => None,
+            Some(i) => Some(i+1)
+        }
+    }
+
+    let five = Some(5);
+    let six = pluse_one(five);
+    println!("{:?}", six);
+    let none = pluse_one(None);
+    println!("{:?}", none);
+
+
     
 
 
