@@ -122,6 +122,58 @@ fn main() {
     let none = pluse_one(None);
     println!("{:?}", none);
 
+    // handle different cases using match and other and _
+
+    let dice_to_roll = 4;
+    match dice_to_roll{
+        3 => go_back(),
+        7 => go_forward(),
+        other => take_step(other),
+    }
+
+    fn go_back(){
+        println!("Go back!")
+    }
+
+    fn go_forward(){
+        println!("Go forward")
+    }
+
+    fn take_step(steps:u8){
+        println!("Take {steps} step.")
+    }
+
+    // in this case it does nothing if it doesn't matches the first two scenarios
+
+    let dice_to_roll = 4;
+    match dice_to_roll{
+        3 => go_back(),
+        7 => go_forward(),
+        _ => (),
+    }
+
+    // matches are exhaustive meaning that they consider all possibilities, this following code
+
+    let my_some = Some(6);
+    // match my_some {
+    //     Some(x) => {
+    //         println!("It is some {x}"); ******** this code results in an error, stating that None is not covered.
+    //     }
+    // }
+
+    // using if let instead of the exhaustive match
+    let config_max = Some(3u8);
+    match config_max {
+        Some(max) => println!("The maximum is {max}"),
+        _ => (),
+        
+    }
+
+    //if let
+    if let Some(max) = config_max {
+        println!("The maximum is configured to be {max}")
+    }
+
 
     
 
