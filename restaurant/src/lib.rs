@@ -87,3 +87,19 @@ pub fn eat_at_reastaurantt(){
 
 }
 
+// use and scopes
+
+use crate::front_of_house::hosting;
+
+pub fn valid_use_scope(){
+    hosting::add_to_wait_list()
+}
+
+// but if you run the following code, it won't run, because the scopes are different and you have to bring the use inside the model to make it valid
+
+// mod valid_model_scope{
+//     pub fn invalid_use_scope(){
+//         hosting::add_to_wait_list()
+//     }
+// }
+
