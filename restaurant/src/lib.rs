@@ -103,3 +103,31 @@ pub fn valid_use_scope(){
 //     }
 // }
 
+
+// As an idiomatic use case, we normally try to use up to the parent model, instead of up to the function. It has some advantages like the functions of the same name cab be
+// problematic but the different parents can handle it and distinguish them.
+
+// use std::fmt;
+// use std::io;
+
+// fn function1() -> fmt::Result {
+  
+// }
+
+// fn function2() -> io::Result<()> {
+  
+// }
+
+// importing external packages and nested packages
+
+// use std::cmp::Ordering;
+// use std::io;
+
+// or we can use nested import. The std is also a package but it doesn't need to be added to the toml file.
+
+use std::{cmp::Ordering, io};
+
+// use std::io;
+// use std::io::Write;
+
+// use std::io::{self, Write}    we use the common part for this one
