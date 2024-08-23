@@ -27,6 +27,33 @@ fn main() {
     // let does_not_exist = v2[1000]; This panics
     let does_not_exist = v2.get(1000);
 
+    // Let's consider the following code
+    let mut a_vector = vec![100, 8, 96,19];
+
+    let sec_element = &a_vector[2];
+    println!("The second element is {sec_element}.");
+
+    a_vector.push(18);
+    // The following print will result in panic because it is about vectors work. Vector puts elements in memory beside each other and sometimes it changes the memory and referencing it will result in error after change.
+    //println!("The second element is {sec_element}.");
+
+    // Iteration over vector values
+
+    let iter_vector = vec![18,39,24,108,79,23];
+    for i in &iter_vector {
+        println!("{i}");
+    }
+
+    let mut iter_vector2 = vec![19,21,8,7,11,10];
+    println!("The mutable vector is {:?}",iter_vector2);
+
+    for i in &mut iter_vector2 {
+        *i +=19;
+    }
+
+    println!("The mutable vector after change is {:?}",iter_vector2);
+
+
 
     
 }
