@@ -23,5 +23,34 @@ fn main() {
     let s5 = s3 + &s4;
     println!("{s5}");
 
-    // now s3 has been moved and no longer userd.
+    // now s3 has been moved and no longer used.
+
+    // using format for adding strings. It uses a macro and uses the reference of the values so it doesn't take ownership.
+    
+    let s6 = format!("{s5}{s4}");
+    println!("{s6}");
+
+    // indexing: Strings doesn't support common indexing which was valid in vectors, and that's mainly because of how strings are stored in memory. Some characters can take up to two bytes and 
+    // trying to get certain indexes will result in mistakes and it wouldn't return the right index we are expecting. 
+
+    // slicing strings in rust
+    let s7 = String::from("привет");
+    let slice_s7 = &s7[0..4];
+    println!("{slice_s7}");
+
+    
+    // Well, we need to be careful, because it only returns the first 4 bytes of the string instead of the first four characters.
+
+
+    // Iterating over strings: You should decide whether you want to work with bytes or chars
+
+    for _char in s7.chars(){
+        println!("{_char}");
+    }
+
+    for _byte in s7.bytes(){
+        println!("{_byte}");
+    }
+
+    // Overall strings are complicated because of their nature and Rust to avoid different errors, has gone through this complexity which is a good tradeoff indeed.
 }
