@@ -76,6 +76,66 @@ fn main() {
         fs::read_to_string("hello.txt")
     }
 
+    // We can only use ? operator on functions which return Result <T> and Option <T>
+
+    // Create a function which returns the last character of a line
+
+    fn last_char_of_first_line(text: &str) -> Option<char> {
+        text.lines().next()?.chars().last()
+
+    }
+
+    let first_text = "Sato is here";
+    let second_text = "";
+
+    let last_char1 = last_char_of_first_line(&first_text);
+    let last_char2 = last_char_of_first_line(&second_text);
+
+    println!("{:?} and {:?}",last_char1, last_char2);y 
+
+    // We can have the main function return any types of Errors by adding the return value of Box <dyn Error> and therefore we can use the ? operator in main in this case.
+
+    // We can use custom types instead of repetitive conditional checks for error handling. Remember the guessing game where wanted an input between 1 to 100
+
+    //**** Using conditionals:
+
+    // loop {
+    //     let guess: i32 = match guess.trim().parse(){
+    //         Ok(num) => num,
+    //         Err(_) => continue,
+    //     };
+    //     if guess < 1 || guess > 100 {
+    //         println!("The secret number should be between 1 and 100");
+    //         continue;
+    //     }
+
+    //     match guess.cmp(&secret_numer){
+    //         ...
+    //     }
+    // }
+
+    // *** Defining a custom type instead of repeating this logics
+
+    pub struct Guess {
+        value: i32,
+    }
+
+    impl Guess {
+        pub fn new(value: i32) -> Guess {
+            if value > 100 || value < 1 {
+                panic!("Guess value must between 1 and 100, but got {}", value);
+            }
+            Guess {value}
+        }
+
+        pub fn value(&self) -> i32 {
+            self.value
+        }
+    }
+
+
+
+
     
 
 }
