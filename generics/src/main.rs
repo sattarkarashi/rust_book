@@ -33,4 +33,67 @@ fn main() {
     get_the_largest_number(&second_list);
 
     // Now we reduced the duplication using the function
+
+    // Let's write a similar function for chars
+    fn get_the_largest_char(list: &[char]) -> &char {
+        let mut largest = &list[0];
+        for item in list {
+            if item > largest {
+                largest = item
+            }
+        }
+        println!("The largest char is {largest}");
+        return largest;
+    }
+
+    let chars = vec!['e', 'l', 'f','a','n'];
+    get_the_largest_char(&chars);
+
+    // Using generics, we can use a type for a single function to work for both types:
+    fn get_the_largest_generic<T: std::fmt::Display + std::cmp::PartialOrd>(list: &[T]) -> &T {
+
+        let mut largest = &list[0];
+        for item in list {
+            if item > largest {
+                largest = item
+            }
+        }
+        println!("The largest val is {largest}");
+        return largest;
+    }
+
+    let chars2 = vec!['d','q','z'];
+    let numbers2 = vec![23,19,36,96];
+
+    get_the_largest_generic(&chars2);
+    get_the_largest_generic(&numbers2);
+
+    // Now it works for both scenarios and we have removed quiet a good amount of duplications.
+
+    // Generics inside structs
+    struct MyCordinates<T> {
+        x:T,
+        y:T
+    }
+
+    let int_cordinates = MyCordinates {
+        x:2,
+        y:3
+    };
+
+    let float_cordinates = MyCordinates {
+        x:2.3,
+        y:3.0
+    };
+
+    // To use multiple types:
+    struct Point <T, U> {
+        x:T,
+        y:U
+    }
+
+    let int_float = Point {
+        x:2.4,
+        y:19
+    };
 }
