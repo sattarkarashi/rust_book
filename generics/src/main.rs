@@ -96,4 +96,18 @@ fn main() {
         x:2.4,
         y:19
     };
+
+    // We can implement generics for methods too
+    impl<T> MyCordinates<T>{
+        fn x(&self) -> &T {
+            &self.x
+        }
+    }
+
+    let p = MyCordinates{
+        x:5,
+        y:19
+    };
+
+    println!("p.x = {}", p.x());
 }
