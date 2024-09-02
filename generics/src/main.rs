@@ -110,4 +110,18 @@ fn main() {
     };
 
     println!("p.x = {}", p.x());
+
+    // we can use generic methods only for certain types too as a constraint, let's implement a generic only on MyCordinates<f32>
+    
+    impl MyCordinates<f32> {
+        fn distance_from_origin(&self) -> f32 {
+            (self.x.powi(2) + self.y.powi(2)).sqrt()
+        }
+    }
+
+    let p2 = MyCordinates{
+        x:10.0,
+        y:12.3
+    };
+    println!("The distance from origin of the new coordinate is {:?}", p2.distance_from_origin());
 }
