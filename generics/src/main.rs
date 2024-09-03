@@ -124,4 +124,38 @@ fn main() {
         y:12.3
     };
     println!("The distance from origin of the new coordinate is {:?}", p2.distance_from_origin());
+
+    // This method cannot work for integer values and it is the constraint defined over this method.
+
+    // Let's go over another example:
+
+    struct Point2<X1, Y1> {
+        x:X1,
+        y:Y1
+    }
+
+    impl<X1,Y1> Point2<X1, Y1> {
+        fn mixup <X2, Y2> (self, other:Point2<X2,Y2>) -> Point2<X1,Y2> {
+            Point2 {
+                x:self.x,
+                y:other.y
+            }
+        }
+    }
+
+    let p3 = Point2{
+        x:5,
+        y:4.8
+    };
+
+    let p4 = Point2{
+        x:"Hello",
+        y:'c'
+    };
+
+    let p5 = p3.mixup(p4);
+
+    println!("p5.x is {} and p5.y is {}", p5.x, p5.y);
+
+
 }
