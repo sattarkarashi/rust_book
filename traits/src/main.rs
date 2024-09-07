@@ -42,4 +42,26 @@ fn main() {
     };
 
     println!("1 new tweet: {}", tweet.summarize());
+
+    // Default trait
+
+    pub trait DefaultSummary {
+        fn default_summarize(&self) -> String {
+            String::from("Read more ...")
+        }
+    }
+
+    impl DefaultSummary for NewsArticle {}
+
+    let article = NewsArticle {
+        headline: String::from("Trying to hit the impression"),
+        content: String::from("Stop trying to have a good impression if you want impression"),
+        location: String::from("Anbar"),
+        author: String::from("Sato"),
+
+    };
+
+    println!("New article is out: {}", article.default_summarize());
+
+
 }
