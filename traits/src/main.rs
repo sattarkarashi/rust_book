@@ -63,5 +63,28 @@ fn main() {
 
     println!("New article is out: {}", article.default_summarize());
 
+    // Traits as parameters
+    pub fn notify(item: &impl Summary){
+        println!("Breaking news! {}", item.summarize());
+    }
+
+    // Trait bounds
+
+    pub fn notify2<T:Summary> (item:&T){
+        println!("Breaking news! {}", item.summarize());
+    }
+
+    // Multiple trait bounds with +
+    // pub fn notify(item: &(impl Summary + Display)){
+
+    // }
+
+    // Trait bounds with Where
+
+    // fn some_function<T,U> (t:&T, u:&U) -> i32 where 
+    // T: Display + Clone,
+    // U: Clone + Debug,
+    // {}
+
 
 }
