@@ -34,5 +34,20 @@ fn main() {
     let what_is_longest = longest(&first_str,&second_str);
     println!("The longest str is {}", what_is_longest);
 
+    // let's define a new longest function
+
+    fn longest2<'a>(x: &'a str, y: &str) -> &'a str {
+        x
+    }
+
+    // this function works because we our return only only depends on the x parameter.
+
+    // let's check this one
+    // fn longest3<'a>(x: &str, y:&str) -> &'a str {
+    //     let result = String::from("Sato is here");
+    //     return result.as_str();
+    // }
+
+    // This code panics, because we are trying to return the reference of result which its scope is over.
 
 }
