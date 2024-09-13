@@ -50,4 +50,36 @@ fn main() {
 
     // This code panics, because we are trying to return the reference of result which its scope is over.
 
+    // lifetime with structs
+
+    let novel = String::from("Sato is here ...");
+    let first_sentence = novel.split('.').next().expect("Cound not find a '.' ");
+    let i = ImportantExcerpt {
+        part:first_sentence,
+    };
+    println!("The first sentence is {}", i.part);
+
+    // ** We need to use lifetime parameter for functions or structs that use references.
+
+    // Some types of lifetimes are deterministic and you can find out about them by three rules and and you wont need to use 
+    // lifetime parameters for them.
+    // first rule is that each reference parameter gets a lifetime parameter
+    // second rule is that if having one reference parameter, its lifetime applies to all the output values
+    // in methods if we have several parameters and one of which is &self or & mut self, its lifetime applies to all other parameters
+
+    // let's implement a method for ImportantExcerpt
+    impl <'a> 
+    ImportantExcerpt <'a> {
+        fn announce_and_return_part(&self, announcement:&str) -> &str {
+            println!("Attention please: {announcement}");
+            self.part
+        }
+    }
+
+    // As you can see we didn't use lifetime annotations for the input and output parameters of the method based on the third rule.
+    
+
+}
+struct ImportantExcerpt <'a> {
+    part: &'a str,
 }
