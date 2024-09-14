@@ -78,6 +78,23 @@ fn main() {
 
     // As you can see we didn't use lifetime annotations for the input and output parameters of the method based on the third rule.
     
+    // let's bring an example containing generics, trait bounds and lifetimes
+
+    use std::fmt::Display;
+
+    fn longest_with_an_announcement <'a, T> (
+        x: &'a str,
+        y: &'a str,
+        ann: T,
+    ) -> &'a str where T: Display, {
+        println!("Announcement! {ann}");
+        if x.len() > y.len() {
+            x
+        }else {
+            y
+        }
+    }
+
 
 }
 struct ImportantExcerpt <'a> {
