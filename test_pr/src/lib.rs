@@ -12,6 +12,14 @@ impl Rectangle {
     }
 }
 
+fn adds_two(a:i32) -> i32 {
+    a + 2
+}
+
+pub fn greetings(name: &str) -> String {
+    format!("Hello!")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -44,5 +52,17 @@ mod tests {
         };
 
         assert!(!larger.can_hold(&smaller));
+    }
+
+    #[test]
+    fn it_adds_two(){
+        assert_eq!(4,adds_two(2));
+    }
+
+    #[test] 
+    fn it_greets(){
+        let result = greetings("Sato");
+
+        assert!(result.contains("Sato"),"Greetings didn't contain name, the value was {result}");
     }
 }
