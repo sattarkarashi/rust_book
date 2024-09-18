@@ -33,6 +33,11 @@ impl Guess {
     }
 }
 
+fn return_10 (val:i32) -> i32 {
+    println!("This test got {val} and returns 10");
+    10
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -84,4 +89,18 @@ mod tests {
     fn greater_than_100 (){
         Guess::new(200);
     }
+
+    #[test]
+    fn this_test_passes(){
+        let val = return_10(4);
+        assert_eq!(val,10);
+    }
+
+    #[test]
+    fn this_test_fails(){
+        let val = return_10(9);
+        assert_eq!(val,5);
+    }
+
+    // to make tests show the outputs of the functions in the passed tests, we should use the cargo test -- --show-output
 }
