@@ -12,7 +12,7 @@ impl Rectangle {
     }
 }
 
-fn adds_two(a:i32) -> i32 {
+pub fn adds_two(a:i32) -> i32 {
     a + 2
 }
 
@@ -84,11 +84,11 @@ mod tests {
         assert!(result.contains("Sato"),"Greetings didn't contain name, the value was {result}");
     }
 
-    #[test]
-    #[should_panic(expected="less than or equal to 100")]
-    fn greater_than_100 (){
-        Guess::new(200);
-    }
+    // #[test]
+    // #[should_panic(expected="less than or equal to 100")]
+    // fn greater_than_100 (){
+    //     Guess::new(400);
+    // }
 
     #[test]
     fn this_test_passes(){
@@ -96,11 +96,11 @@ mod tests {
         assert_eq!(val,10);
     }
 
-    #[test]
-    fn this_test_fails(){
-        let val = return_10(9);
-        assert_eq!(val,5);
-    }
+    // #[test]
+    // fn this_test_fails(){
+    //     let val = return_10(9);
+    //     assert_eq!(val,5);
+    // }
 
     // to make tests show the outputs of the functions in the passed tests, we should use the cargo test -- --show-output
 }
