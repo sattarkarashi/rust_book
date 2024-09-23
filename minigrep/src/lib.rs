@@ -35,6 +35,39 @@ impl Config {
 pub fn run(config: Config)-> Result<(), Box<dyn Error>>{
     let contents = fs::read_to_string(config.file_path)?;
 
-    println!("With text: \n {contents}");
     Ok(())
+}
+
+// we go ahead based on the TDD, we write a failing test and then write the code to pass the test, and then refactor the code and then repeat the process
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_result(){
+        let query = "duct";
+        let contents = "\
+        Rust:
+        safe, fast, productive.
+        Go ahead.";
+
+        assert_eq!(vec!["safe, fast, productive"],search(query,contents));
+
+    }
+}
+
+pub fn search <'a> (
+    query: &str,
+    contents:&'a str,
+) -> Vec<&'a str> {
+    let mut results = Vec::new();
+
+    for line in contents.lines(){
+        if line.contains(query){
+            results.push(line);
+        }
+    }
+
+    results
 }
