@@ -35,6 +35,10 @@ impl Config {
 pub fn run(config: Config)-> Result<(), Box<dyn Error>>{
     let contents = fs::read_to_string(config.file_path)?;
 
+    for line in search(&config.query, &contents) {
+        println!("{line}");
+    }
+
     Ok(())
 }
 
@@ -48,12 +52,34 @@ mod tests {
     fn one_result(){
         let query = "duct";
         let contents = "\
-        Rust:
-        safe, fast, productive.
-        Go ahead.";
+Rust:
+safe, fast, productive.
+Go ahead.";
 
-        assert_eq!(vec!["safe, fast, productive"],search(query,contents));
+        assert_eq!(vec!["safe, fast, productive."],search(query,contents));
 
+    }
+
+    #[test]
+    fn case_sensitive(){
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Go ahead. Duct tape";
+
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents))
+    }
+
+    #[test]
+    fn case_insensitive(){
+        let query = "Rust";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Go ahead. Trust me";
+
+        assert_eq!(vec!["Rust:", "Go ahead. Trust me"], search_case_insensitive(query, contents));
     }
 }
 
@@ -70,4 +96,21 @@ pub fn search <'a> (
     }
 
     results
+}
+
+pub fn search_case_insensitive<'a> (query: &str, contents: &'a str) -> Vec<&'a str> {
+
+    // to_lowercase method actually creates a new string instead of referencing it.
+    let query = query.to_lowercase();
+    let mut results = Vec::new();
+
+    for line in contents.lines(){
+        // We add & to query because contains gets string slices not strings. The signature of contains is to take string slices.
+        if line.to_lowercase().contains(&query){
+            results.push(line);
+        }
+    }
+
+    results
+
 }
