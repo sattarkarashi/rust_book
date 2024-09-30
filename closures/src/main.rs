@@ -37,7 +37,11 @@ use std::thread;
 
     // We're defining a closure here
 
-    
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    length: u32,
+}
 
 fn main() {
     let store = Inventory {
@@ -87,6 +91,31 @@ fn main() {
     borrows_mutably();
     println!("After defining closure in the mutable phase: {:?}", list2);
 
+    // Initiating this thread without move ends in an error, because the thread may start after the main thread is over and the value is no longer valid.
+
+    thread::spawn(move || {
+        println!("From thread: {:?}", list)
+    }).join().unwrap();
+
+    // Let's look at unwrap_or_else method
+
+    // impl<T> Option<T> {
+    //     pub fn unwrap_or_else<F>(self, f:F) -> T
+    //     where F:FnOnce() -> T {
+    //         math self {
+    //             Some(x) => x,
+    //             None => f(),
+    //         }
+    //     }
+    // }
+
+    
+
+    
+    let mut list = [Rectangle{width:10,length:18}, Rectangle{width:8,length:19},Rectangle{width:13,length:6}];
+    
+    list.sort_by_key(|r| r.width);
+    println!("{:#?}",list);
 
 
 
