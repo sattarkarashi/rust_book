@@ -116,6 +116,22 @@ fn main() {
     
     list.sort_by_key(|r| r.width);
     println!("{:#?}",list);
+    
+
+    // This closure moves a value out of the environment and uses FnOnce trait
+    
+
+    let mut list2 = [Rectangle{width:10,length:18}, Rectangle{width:8,length:19},Rectangle{width:13,length:6}];
+    let mut sort_operations = vec![];
+
+    let value = String::from("By key called");
+
+    list2.sort_by_key(|r| {
+        sort_operations.push(value.clone());
+        r.width
+    });
+    println!("{:#?}",sort_operations);
+
 
 
 
