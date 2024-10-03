@@ -69,9 +69,14 @@ fn main() {
 
     let add_one_v2 = |x:u32| -> u32 {x+1};
 
-    // let add_one_v3 = |x|       {x+1};
+    let add_one_v3 = |x|       {x+1};
 
-    // let add_one_v4 = |x|  x+1;
+    let s = add_one_v3(5);
+
+    let add_one_v4 = |x|  x;
+    // If you don't give it value, it will end in error, because it wants to infer the type.
+    let s2 = add_one_v4(String::from("Sato"));
+
 
     // Ownership and closures
 
@@ -122,15 +127,37 @@ fn main() {
     
 
     let mut list2 = [Rectangle{width:10,length:18}, Rectangle{width:8,length:19},Rectangle{width:13,length:6}];
-    let mut sort_operations = vec![];
+    // let mut sort_operations = vec![];
 
     let value = String::from("By key called");
 
+    // list2.sort_by_key(|r| {
+    //     sort_operations.push(value);
+    //     r.width
+    // });
+    // println!("{:#?}",sort_operations);
+
+    // The above code results in error because it moves a variable out of the environment and it calls FnOnce while the sorting calls the closure multiple times which ends in error.
+
+
+    // The below code shows how many times the sort_by_key calls the closure.
+    let mut num_sort_operations = 0;
     list2.sort_by_key(|r| {
-        sort_operations.push(value.clone());
+        num_sort_operations +=1;
         r.width
     });
-    println!("{:#?}",sort_operations);
+
+    println!("{:#?}, sorted in {num_sort_operations}",list2);
+
+    // Iterators: Iterators are lazy, meaning that they have no effect until you call methods on them.
+    let v1 = vec![1,2,3];
+    let v1_iter = v1.iter();
+
+    // This is where it is called
+    for val in v1_iter {
+        println!("Got: {val}");
+    }
+
 
 
 
