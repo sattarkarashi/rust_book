@@ -20,14 +20,18 @@ pub struct Config {
 // We use a method for config instead of the above commented function which makes it more cleaner and structured.
 
 impl Config {
-    pub fn build(args: &[String]) -> Result<Config, &'static str> {
-        
-        if args.len() < 3 {
-            return Err("Not enough arguments to extract.")
-        }
-        
-        let query = args[1].clone();
-        let file_path = args[2].clone();
+    pub fn build(mut args: impl Iterator<Item=String>) -> Result<Config, &'static str> {
+        args.next();
+        let query = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a query string."),
+        };
+
+        let file_path = match args.next() {
+            Some(arg) => arg,
+            None => return Err("Didn't get a file_path string."),
+        };
+
 
         let ignore_case = env::var("IGNORE_CASE").is_ok();
 

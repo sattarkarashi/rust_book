@@ -4,12 +4,12 @@ use std::process;
 use minigrep::Config;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
 
-    let config = Config::build(&args).unwrap_or_else(|err| {
-            eprintln!("Problem parsing arguments: {err}");
-            process::exit(1);
-        });
+    // We improve the project using iterators
+    let config = Config::build(env::args()).unwrap_or_else(|err| {
+        eprintln!("Problem parsing arguments: {err}");
+        process::exit(1);
+    });
 
     // A function to get arguments, we should avoid using lots of logic inside main, instead we should use different parts in different function and each function just do one thing
    
