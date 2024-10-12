@@ -78,6 +78,36 @@ fn main() {
     let m = MyBox::new(String::from("Sato"));
     hello(&m);
 
+    // Drop trait : what happens when a value goes out of scope.
+    struct CustomSmartPointer {
+        data: String,
+    }
+
+    impl Drop for CustomSmartPointer {
+        fn drop(&mut self){
+            println!("Dropping CustomSmartPointer with data {}!", self.data);
+        }
+    }
+
+    let c = CustomSmartPointer {
+        data: String::from("Sato is going forward.")
+    };
+
+    let d = CustomSmartPointer {
+        data: String::from("Sato is learning.")
+    };
+
+    println!("CustomSmartPointers created.");
+
+    // Note that we didn't need to explicitly call the drop method, it will call whenever the values go out of scope.
+
+    // We can call the drop method explicitly, because it ends up in double free error, so to force drop on a value we should import the drop from std::mem::drop
+    use std::mem::drop;
+
+    drop(c);
+
+    // Rc<T> reference counted smart pointer
+
 
 
 
