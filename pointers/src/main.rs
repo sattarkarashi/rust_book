@@ -1,8 +1,16 @@
+// enum List {
+//     Cons(i32, Box<List>),
+//     Nil,
+// }
+// use crate::List::{Cons, Nil};
+
 enum List {
-    Cons(i32, Box<List>),
+    Cons(i32, Rc<List>),
     Nil,
 }
 use crate::List::{Cons, Nil};
+use std::rc::Rc;
+
 
 fn main() {
     // Using Box<T> to store data on the heap
@@ -30,86 +38,101 @@ fn main() {
 
     
 
-    let list = Cons(1, Box::new(Cons(2,Box::new(Cons(3,Box::new(Nil))))));
+    // let list = Cons(1, Box::new(Cons(2,Box::new(Cons(3,Box::new(Nil))))));
 
-    // Using deref for smart pointers
-    let x = 5;
-    let y = &x;
-    assert_eq!(5,x);
-    assert_eq!(5,*y);
+    // // Using deref for smart pointers
+    // let x = 5;
+    // let y = &x;
+    // assert_eq!(5,x);
+    // assert_eq!(5,*y);
 
-    // Using Box<T> instead
+    // // Using Box<T> instead
 
-    let x = 5;
-    let y = Box::new(x);
-    assert_eq!(5,x);
-    assert_eq!(5,*y);
+    // let x = 5;
+    // let y = Box::new(x);
+    // assert_eq!(5,x);
+    // assert_eq!(5,*y);
 
-    // Let's build a Box<T> and show how is different from references
+    // // Let's build a Box<T> and show how is different from references
 
-    struct MyBox<T>(T);
-    impl<T> MyBox<T> {
-        fn new(x:T) -> MyBox<T>{
-            MyBox(x)
-        }
-    }
+    // struct MyBox<T>(T);
+    // impl<T> MyBox<T> {
+    //     fn new(x:T) -> MyBox<T>{
+    //         MyBox(x)
+    //     }
+    // }
 
-    use std::ops::Deref;
+    // use std::ops::Deref;
 
-    impl<T> Deref for MyBox<T> {
-        type Target = T;
-        fn deref(&self) -> &Self::Target {
-            &self.0
-        }
-    }
+    // impl<T> Deref for MyBox<T> {
+    //     type Target = T;
+    //     fn deref(&self) -> &Self::Target {
+    //         &self.0
+    //     }
+    // }
 
-    let x = 5;
-    let y = MyBox::new(x);
-    assert_eq!(5,x);
-    assert_eq!(5,*y);
+    // let x = 5;
+    // let y = MyBox::new(x);
+    // assert_eq!(5,x);
+    // assert_eq!(5,*y);
 
-    // *y actually implements the *y.deref() in practice.
+    // // *y actually implements the *y.deref() in practice.
 
-    // Implicit Deref Coercion
-    fn hello(name: &str) {
-        println!("Hello, {name}!");
-    }
+    // // Implicit Deref Coercion
+    // fn hello(name: &str) {
+    //     println!("Hello, {name}!");
+    // }
 
-    let m = MyBox::new(String::from("Sato"));
-    hello(&m);
+    // let m = MyBox::new(String::from("Sato"));
+    // hello(&m);
 
-    // Drop trait : what happens when a value goes out of scope.
-    struct CustomSmartPointer {
-        data: String,
-    }
+    // // Drop trait : what happens when a value goes out of scope.
+    // struct CustomSmartPointer {
+    //     data: String,
+    // }
 
-    impl Drop for CustomSmartPointer {
-        fn drop(&mut self){
-            println!("Dropping CustomSmartPointer with data {}!", self.data);
-        }
-    }
+    // impl Drop for CustomSmartPointer {
+    //     fn drop(&mut self){
+    //         println!("Dropping CustomSmartPointer with data {}!", self.data);
+    //     }
+    // }
 
-    let c = CustomSmartPointer {
-        data: String::from("Sato is going forward.")
-    };
+    // let c = CustomSmartPointer {
+    //     data: String::from("Sato is going forward.")
+    // };
 
-    let d = CustomSmartPointer {
-        data: String::from("Sato is learning.")
-    };
+    // let d = CustomSmartPointer {
+    //     data: String::from("Sato is learning.")
+    // };
 
-    println!("CustomSmartPointers created.");
+    // println!("CustomSmartPointers created.");
 
-    // Note that we didn't need to explicitly call the drop method, it will call whenever the values go out of scope.
+    // // Note that we didn't need to explicitly call the drop method, it will call whenever the values go out of scope.
 
-    // We can call the drop method explicitly, because it ends up in double free error, so to force drop on a value we should import the drop from std::mem::drop
-    use std::mem::drop;
+    // // We can call the drop method explicitly, because it ends up in double free error, so to force drop on a value we should import the drop from std::mem::drop
+    // use std::mem::drop;
 
-    drop(c);
+    // drop(c);
 
     // Rc<T> reference counted smart pointer
 
+    
+    
+    
 
+    let a = Rc::new(Cons(5,
+            Rc::new(Cons(10,
+            Rc::new(Nil)))));
 
+    println!("Count after creating a = {}", Rc::strong_count(&a));
 
+    let b = Cons(3, Rc::clone(&a));
+    println!("Count after creating b = {}", Rc::strong_count(&a));
+    {
+        let c = Cons(4, Rc::clone(&a));
+        println!("Count after creating c = {}", Rc::strong_count(&a));
+    }
+    println!("Count after c goes out of scope = {}", Rc::strong_count(&a));
 
+    // Rc::clone just increments the references instead of deep copying
 }
