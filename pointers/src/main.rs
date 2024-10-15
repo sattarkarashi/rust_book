@@ -135,4 +135,13 @@ fn main() {
     println!("Count after c goes out of scope = {}", Rc::strong_count(&a));
 
     // Rc::clone just increments the references instead of deep copying
+
+    // RefCall: The invariants are enforced at runtime while with box<T> it was enforced in compile time.
+
+    // Interior mutability: the below code will result in an error because you are not allowed to get a mutable borrow of an immutable value:
+
+    // let x = 5;
+    // let y = &mut x;
+
+    
 }
