@@ -10,7 +10,7 @@ pub struct LimitTracker<'a, T:Messenger> {
     max:usize
 }
 
-impl <'a, T> LimitTracker<'a,T> where T:messenger, {
+impl <'a, T> LimitTracker<'a,T> where T:Messenger, {
     pub fn new(
         messenger: &'a T,
         max:usize,
@@ -31,5 +31,43 @@ impl <'a, T> LimitTracker<'a,T> where T:messenger, {
         } else if percentage_of_max >= 0.75 {
             self.messenger.send("Warning:You're at 75% of your quota!");
         }
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use std::cell::RefCell;
+
+    struct MockMessenger {
+        // sent_messages:Vec<String>, This is results in error, in the code following
+
+        sent_messages:RefCell<Vec<String>>,
+    }
+
+    impl MockMessenger {
+        fn new() -> MockMessenger {
+            MockMessenger{
+                sent_messages:RefCell::new(vec![]),
+
+            }
+        }
+    }
+
+    impl Messenger for MockMessenger {
+        fn send(&self, message: &str){
+            self.sent_messages.borrow_mut().push(String::from(message));
+        }
+    }
+
+    #[test]
+    fn it_sends_an_over_75_percent_warning_message(){
+        let mock_messenger = MockMessenger::new();
+        let mut limit_tracker = LimitTracker::new(&mock_messenger,100);
+        limit_tracker.set_value(80);
+
+        assert_eq!(mock_messenger.sent_messages.borrow().len(),1);
+
     }
 }
