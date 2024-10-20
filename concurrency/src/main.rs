@@ -1,4 +1,5 @@
 use std::thread;
+use std::sync::mpsc;
 use std::time::Duration;
 
 fn main() {
@@ -29,6 +30,16 @@ fn main() {
 
     handle.join().unwrap();
 
-    // Message passing between threads
+    // Message passing between threads ** Don not communicate by sharing memory, instead share memory by communicating.
+    let (tx, rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        let val = String::from("hi");
+        tx.send(val).unwrap();
+    });
+
+    let received = rx.recv().unwrap();
+    println!("Got: {received}");
+
 
 }
