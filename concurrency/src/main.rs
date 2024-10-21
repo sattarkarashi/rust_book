@@ -41,5 +41,25 @@ fn main() {
     let received = rx.recv().unwrap();
     println!("Got: {received}");
 
+    // The following code ends in compile error because send takes ownership
+    // thread::spawn(move || {
+    //     let val = String::from("hi");
+    //     tx.send(val).unwrap();
+    //     println!("Val is {val}");
+    // });
+
+    // Sending multiple values
+    let (tx, rx) = mpsc::channel();
+
+    let vals = vec![String::from("Hi"),String::from("from"),String::from("the"),String::from("thread")];
+    for val in vals {
+        tx.send(val).unwrap();
+        thread::sleep(Duration::from_millis(1));
+    }
+
+    for received in rx {
+        println!("Got: {received}");
+    }
+
 
 }
