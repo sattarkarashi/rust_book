@@ -1,6 +1,7 @@
 use std::thread;
 use std::sync::mpsc;
 use std::time::Duration;
+use std::sync::Mutex;
 
 fn main() {
     let handle = thread::spawn(|| {
@@ -86,6 +87,34 @@ fn main() {
     for received in rx {
         println!("Got: {received}");
     }
+
+    // Mutex
+    let m = Mutex::new(5);
+    {
+        let mut num = m.lock().unwrap();
+        *num = 6;
+    }
+    println!("m = {:?}",m);
+
+    // Share mutex between multiple threads
+    let counter = Mutex::new(0);
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+            *num += 1;
+        });
+
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+
+    }
+
+    println!("Result: {}", *counter.lock().unwrap());
 
 
 
