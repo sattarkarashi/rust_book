@@ -1,7 +1,8 @@
 use std::thread;
 use std::sync::mpsc;
 use std::time::Duration;
-use std::sync::Mutex;
+use std::sync::{Arc,Mutex};
+use std::rc::Rc;
 
 fn main() {
     let handle = thread::spawn(|| {
@@ -88,7 +89,7 @@ fn main() {
         println!("Got: {received}");
     }
 
-    // Mutex
+    // Mutex: one thread at time
     let m = Mutex::new(5);
     {
         let mut num = m.lock().unwrap();
@@ -97,10 +98,11 @@ fn main() {
     println!("m = {:?}",m);
 
     // Share mutex between multiple threads
-    let counter = Mutex::new(0);
+    let counter = Arc::new(Mutex::new(0));
     let mut handles = vec![];
 
     for _ in 0..10 {
+        let counter = Arc::clone(&counter);
         let handle = thread::spawn(move || {
             let mut num = counter.lock().unwrap();
             *num += 1;
@@ -115,6 +117,9 @@ fn main() {
     }
 
     println!("Result: {}", *counter.lock().unwrap());
+
+    // Atomic reference counting with Arc<T>
+
 
 
 
