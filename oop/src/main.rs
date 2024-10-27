@@ -33,4 +33,9 @@ fn main() {
 
     // The option to use pub or not enables encapsulation in Rust. And considering structs and enum which can contain data, 
     // and impl which contains methods, we can consider Rust OOP.
+
+    // Inheritance as a type system and as code sharing: Rust uses trait objects instead of inheritance. Inheritance is risky because it risks overexposure.
+
+    
+
 }
