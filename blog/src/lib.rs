@@ -24,10 +24,18 @@ impl Post {
             self.state = Some(s.request_review)
         }
     }
+
+    pub fn approve(&mut self){
+        if let Some(s) = self.state.take(){
+            self.state = Some(s.approve())
+        }
+    }
 }
 
 trait State {
     fn request_review(self: Box<Self>) -> Box<dyn State>;
+
+    fn approve(Self: Box<Self>) -> Box<dyn State>;
 }
 
 trait Draft {}
@@ -36,6 +44,10 @@ impl State for Draft {
     fn request_review(self:Box<self>) -> Box<dyn State> {
         Box::new(PendingReview {})
     }
+
+    fn approve(Self: Box<Self>) -> Box<dyn State> {
+        self
+    };
 }
 
 struct PendingReview {}
@@ -44,6 +56,10 @@ impl State for PendingReview {
     fn request_review(self:Box<Self>) -> Box<dyn State> {
         self
     }
+
+    fn approve(Self: Box<Self>) -> Box<dyn State>{
+        Box::new(Published {})
+    };
 }
 
 impl State for Draft {}
