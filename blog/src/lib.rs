@@ -62,6 +62,18 @@ impl State for PendingReview {
     };
 }
 
+struct Published {}
+
+imple State for Published{
+    fn request_review(self:Box<Self>) -> Box<dyn State> {
+        self
+    }
+
+    fn approve(Self: Box<Self>) -> Box<dyn State>{
+        self
+    };
+}
+
 impl State for Draft {}
 
 #[cfg(test)]
