@@ -16,7 +16,7 @@ impl Post {
     }
 
     pun fn content(&self) -> &str {
-        ""
+        self.state.as_ref().unwrap().content(self)
     }
 
     pub fn request_review(&mut self){
@@ -36,6 +36,10 @@ trait State {
     fn request_review(self: Box<Self>) -> Box<dyn State>;
 
     fn approve(Self: Box<Self>) -> Box<dyn State>;
+
+    fn content<'a> (&self, post:&'a Post){
+        &post.content
+    }
 }
 
 trait Draft {}
