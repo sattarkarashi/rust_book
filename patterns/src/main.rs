@@ -54,6 +54,15 @@ fn main() {
 
     for (index, value) in v.iter().enumerate(){
         println!("{value} is at index {index}");
+
     }
+
+    // Function parameters
+    fn print_coordinates(&(x, y): &(i32, i32)) {
+        println!("Coordinates: ({}, {})", x, y);
+    }
+
+    let point = (3, 5);
+    print_coordinates(&point);
 
 }
