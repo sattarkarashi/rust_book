@@ -65,4 +65,25 @@ fn main() {
     let point = (3, 5);
     print_coordinates(&point);
 
+    // Refutability
+    if let Some(x) = Some(5) {
+        println!("x is {x}");
+    };
+
+    // The following code will warn because x is not refutable and it is not neeeded.
+    if let x = 5 {
+        println!("x is {x}");
+    }
+
+    // Matching literals
+
+    let x = 1;
+
+    match x {
+        1 => println!("one"),
+        2 => println!("two"),
+        3 => println!("three"),
+        _ => println!("anything"),
+    }
+
 }
