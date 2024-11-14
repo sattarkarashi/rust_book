@@ -101,7 +101,7 @@ fn main() {
     // Multiple patterns
     let x = 1;
     match x { 
-        1 | 2 => println("one or two"),
+        1 | 2 => println!("one or two"),
         3 => println!("three"),
         _ => println!("anything"),
     }
@@ -111,5 +111,37 @@ fn main() {
         1..=5 => println!("one through five"),
         _ => println!("something else"),
     }
+
+    // Ranges in char values
+
+    let x = 'c';
+    match x {
+        'a'..='j' => println!("early ASCII letter"),
+        'k'..='z' => println!("late ASCII letter"),
+        _ => println!("something else"),
+    }
+
+    // Destructuring structs
+    struct Point {
+        x: i32,
+        y: i32,
+    }   
+
+    let p = Point { x: 0, y: 7 };   
+
+    let Point { x: a, y: b } = p;
+    println!("a: {a}, b: {b}");
+
+    // Matching axis
+    let p = Point { x: 0, y: 7 };
+
+    match p {
+        Point { x, y: 0 } => println!("On the x axis at {x}"),  
+        Point { x: 0, y } => println!("On the y axis at {y}"),
+        Point { x, y } => println!("On neither axis: ({x}, {y})"),
+    }
+
+
+    
 
 }
