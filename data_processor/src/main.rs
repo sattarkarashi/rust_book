@@ -30,4 +30,33 @@ fn main() {
                 .collect()
         }
     }
+
+    impl DataProcessor {
+        fn add_vectors(&self, other: &Vec<f64>) -> Vec<f64> {
+            self.vector.iter()
+                .zip(other.iter())
+                .map(|(a, b)| a + b)
+                .collect()
+        }
+
+        fn multiply_vectors(&self, other: &Vec<f64>) -> Vec<f64> {
+            self.vector.iter()
+                .zip(other.iter())
+                .map(|(a, b)| a * b)
+                .collect()
+        }
+
+        fn dot_product(&self, other: &Vec<f64>) -> f64 {
+            self.multiply_vectors(other).iter().sum()
+        }
+
+        fn scale_vector(&self, scalar: f64) -> Vec<f64> {
+            self.vector.iter()
+                .map(|x| x * scalar)
+                .collect()
+        }
+    }
+
+    let mut dp = DataProcessor::new();
+    dp.add_vector(vec![1.0, 2.0, 3.0]);
 }
